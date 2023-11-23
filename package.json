@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-for-check-internet-connection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "express": "^4.18.2",
+    "express-busboy": "^10.1.0",
+    "express-fileupload": "^1.4.3",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "xhr": "^2.6.0"
+  }
+}

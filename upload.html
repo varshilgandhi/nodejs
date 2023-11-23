@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Upload File</h2>
+        <form id="upload_form" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" class="form-control-file" name="file" id="fileInput">
+            </div>
+            
+            <button type="button" class="btn btn-primary" onclick="uploadFile()">Upload</button>
+
+            <progress id="progressBar" value="0" max="100" style="width: 100%; display: none;"></progress>
+            <h3 id="status"></h3>
+            <p id="loaded_n_total"></p>
+            <span id="fileName" class="ml-3"></span>
+            <a href="/" class="btn btn-secondary mt-3">Home</a>
+        </form>
+    </div>
+    <!-- Include Axios library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const progressBar = document.getElementById('progressBar');
+            const status = document.getElementById('status');
+
+            const file = fileInput.files[0];
+            const formdata = new FormData();
+            formdata.append("file", file);
+
+            axios.post('/upload', formdata, {
+                onUploadProgress: progressEvent => {
+                    const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    progressBar.style.display = 'block';
+                    progressBar.value = percent;
+                    status.innerHTML = percent + "% uploaded... please wait";
+                }
+            })
+            .then(response => {
+                progressBar.style.display = 'none';
+                status.innerHTML = response.data;
+            })
+            .catch(error => {
+                status.innerHTML = "Upload Failed";
+                console.error('Error uploading file: ', error);
+            });
+        }
+    </script>
+</body>
+</html>
